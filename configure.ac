@@ -61,6 +61,7 @@ m4_define([gtk_required_version], [3.4.2])
 m4_define([lua_required_version], [5.2])
 m4_define([pango_required_version], [1.30.0])
 m4_define([soup_required_version], [2.42])
+m4_define([libcurl_required_version], [7.47.0])
 AC_SUBST([CAIRO_REQUIRED_VERSION], cairo_required_version)
 AC_SUBST([GLIB_REQUIRED_VERSION], glib_required_version)
 AC_SUBST([GSTREAMER_REQUIRED_VERSION], gstreamer_required_version)
@@ -68,6 +69,8 @@ AC_SUBST([GTK_REQUIRED_VERSION], gtk_required_version)
 AC_SUBST([LUA_REQUIRED_VERSION], lua_required_version)
 AC_SUBST([PANGO_REQUIRED_VERSION], pango_required_version)
 AC_SUBST([SOUP_REQUIRED_VERSION], soup_required_version)
+
+
 
 # Tool checks.
 AU_PROG_CC_VISIBILITY
@@ -115,6 +118,9 @@ AU_CHECK_PKG([CAIRO], [cairo >= cairo_required_version],
 #endif
  ]])],
  [AC_LANG_PROGRAM([[]], [[cairo_create (0);]])])
+
+
+
 
 # Check for GLib.
 AU_VERSION_BREAK([glib], glib_required_version)
@@ -180,6 +186,8 @@ pango_context_new ();
 pango_cairo_create_context (0);
  ]])])
 
+
+
 # Check for GIO (optional).
 AU_CHECK_OPTIONAL_PKG([event-tcp], [build the tcp event class], [],
  [GIO], gio-2.0 >= glib_required_version,
@@ -213,6 +221,12 @@ AU_CHECK_OPTIONAL_PKG([event-http], [build the http event class], [],
 #endif
  ]])],
  [AC_LANG_PROGRAM([[]], [[soup_session_new_with_options (0, 0, 0);]])])
+
+ # Check for LIBCURL (optional).
+# AU_VERSION_BREAK([libcurl], libcurl_required_version)
+AU_CHECK_OPTIONAL_PKG([libcurl], [URL and SSL support], [],
+[LIBCURL], libcurl >= libcurl_required_version , [], [])
+
 
 # Check for GStreamer (optional).
 AU_VERSION_BREAK([gstreamer], gstreamer_required_version)
@@ -285,6 +299,8 @@ AC_MSG_NOTICE([summary of main build options:
   library types:      Shared=${enable_shared}, Static=${enable_static}
   valgrind:           ${VALGRIND}
 
+
+  build libcurl:      ${with_libcurl_result}
   build http:         ${with_event_http_result}
   build tcp:          ${with_event_tcp_result}
   build gstnclua:     ${with_nclua_gst_result}

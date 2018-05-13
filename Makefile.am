@@ -36,11 +36,13 @@ dist-hook:
 	@echo $(VERSION) > $(distdir)/.tarball-version
 	@cp -r $(srcdir)/contrib $(srcdir)/examples $(distdir)
 
+
 EXTRA_DIST+=\
   .version\
   README.md\
   bootstrap\
   build-aux/git-log-fix\
+  build-aux/libcurl.m4\
   build-aux/git-version-gen\
   build-aux/gitlog-to-changelog\
   build-aux/manywarnings.m4\
@@ -83,6 +85,7 @@ MAINTAINERCLEANFILES+=\
   ChangeLog\
   INSTALL\
   aclocal.m4\
+  build-aux/libcurl.m4\
   build-aux/ar-lib\
   build-aux/compile\
   build-aux/config.guess\

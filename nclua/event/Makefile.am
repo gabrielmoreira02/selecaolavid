@@ -99,6 +99,7 @@ stopwatch_la_SOURCES=\
   stopwatch.c\
   $(NULL)
 
+
 # tcp_socket
 if WITH_EVENT_TCP
 eventlib_LTLIBRARIES+= tcp_socket.la

@@ -22,9 +22,9 @@ AM_CPPFLAGS= -I$(top_srcdir)/lib -I$(top_builddir)/lib\
   -DTOP_SRCDIR=\"$(top_srcdir)\" -DTOP_BUILDDIR=\"$(top_builddir)\"
 
 AM_CFLAGS= $(WERROR_CFLAGS) $(WARN_CFLAGS)\
-  $(CAIRO_CFLAGS) $(GLIB_CFLAGS) $(LUA_CFLAGS)
+  $(CAIRO_CFLAGS) $(GLIB_CFLAGS) $(LUA_CFLAGS) $(LIBCURL_CFLAGS)
 
-AM_LDFLAGS= -static $(CAIRO_LIBS) $(GLIB_LIBS) $(LUA_LIBS)
+AM_LDFLAGS= -static $(CAIRO_LIBS) $(GLIB_LIBS) $(LUA_LIBS) $(LIBCURL_LIBS)
 LDADD= $(top_builddir)/lib/libnclua.la
 
 # Auxiliary libraries.
@@ -43,8 +43,8 @@ tests0.def:
 
 tests0_la_DEPENDENCIES= $(tests0_def_dependency)
 tests0_la_CFLAGS= $(AM_CFLAGS)
-tests0_la_LDFLAGS= -module $(LT_MODULE_LDFLAGS) -rpath '/force-shared'\
-  $(CAIRO_LIBS) $(GLIB_LIBS) $(tests0_export_symbols)
+tests0_la_LDFLAGS= -module $(LT_MODULE_LDFLAGS) $(LIBCURL_LDFLAGS) -rpath '/force-shared'\
+  $(CAIRO_LIBS) $(GLIB_LIBS) $(LIBCURL_LIBS) $(tests0_export_symbols)
 
 # Auxiliary programs.
 noinst_PROGRAMS= libnclua-echo lua
@@ -118,6 +118,7 @@ scripts+= test-canvas-flush.lua
 scripts+= test-canvas-measureText.lua
 scripts+= test-canvas-pixel.lua
 scripts+= test-canvas-_resize.lua
+scripts+= desafio1.lua
 # dir
 scripts+= test-dir-api.lua
 scripts+= test-dir-test.lua
@@ -212,6 +213,8 @@ check_SCRIPTS= $(scripts)
 
 # Test programs.
 programs=
+programs+= desafio2
+programs+= desafio3-test
 programs+= test-libnclua-open
 programs+= test-libnclua-open-x
 programs+= test-libnclua-close
